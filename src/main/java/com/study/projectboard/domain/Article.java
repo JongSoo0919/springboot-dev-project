@@ -8,7 +8,9 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -34,6 +36,12 @@ public class Article {
     @Setter
     private String hashtag; // 해시태그
 
+    @ToString.Exclude
+    @OrderBy("id")
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
+    private final Set<ArticleComment> articleComments = new LinkedHashSet<>();
+
+
     //TODO : 공통 메타데이터를 BaseEntity로 공통화
     @CreatedDate
     @Column(nullable = false)
@@ -54,7 +62,7 @@ public class Article {
         this.hashtag = hashtag;
     }
 
-    public static Article of(String title, String content, String hashtag){
+    public static Article of(String title, String content, String hashtag) {
         return new Article(title, content, hashtag);
     }
 
