@@ -32,6 +32,10 @@ spring:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     generate-ddl: true
 
+  data.rest:
+    base-path: /api
+    detection-strategy: annotated
+
   h2:
     console:
       enabled: true
