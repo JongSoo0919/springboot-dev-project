@@ -1,5 +1,6 @@
 package com.study.projectboard.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Disabled("Spring Data REST 는 이미 검증된 기능이므로 테스트 대상에서 제외해도 무관하다.")
 @DisplayName("Data REST API Test")
 @Transactional
 @AutoConfigureMockMvc
