@@ -38,7 +38,7 @@ class JpaRepositoryTest {
 
     @DisplayName("select test")
     @Test
-    void givenTestData_whenSelecting_thenMorksFine(){
+    void givenTestData_whenSelecting_thenMocksFine(){
         //given
 
         //when
@@ -54,5 +54,49 @@ class JpaRepositoryTest {
         assertThat(articleComments)
                 .isNotNull()
                 .hasSize(0);
+    }
+    @DisplayName("insert test")
+    @Test
+    void givenTestData_whenInserting_thenMocksFine(){
+        //given
+        long previousCount = articleRepository.count();
+
+        //when
+        Article savedArticle = articleRepository.save(Article.of("new article", "new Content", " #Spring"));
+        System.out.println(savedArticle.toString());
+
+        //then
+        assertThat(articleRepository.count())
+                .isEqualTo(previousCount + 1);
+    }
+
+    @DisplayName("update test")
+    @Test
+    void givenTestData_whenUpdating_thenMocksFine(){
+        //given
+        Article article = articleRepository.findById(1L).orElseThrow();
+        String updatingHashtag = "#Springboot";
+        article.setHashtag(updatingHashtag);
+
+        // when
+        Article savedArticle = articleRepository.saveAndFlush(article);
+
+        // then
+        assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updatingHashtag);
+    }
+
+    @DisplayName("delete test")
+    @Test
+    void givenTestData_whenDeleting_thenMocksFine(){
+        //given
+        Article article = articleRepository.findById(1L).orElseThrow();
+        long previousArticleCount = articleRepository.count();
+
+        // when
+        articleRepository.delete(article);
+
+        // then
+        assertThat(articleRepository.count())
+                .isEqualTo(previousArticleCount - 1);
     }
 }
